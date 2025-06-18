@@ -13,7 +13,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 })
 export class AppComponent {
   postService = inject(PostServiceService);
-
   showCreateModal = false;
 
   constructor() {}
@@ -21,14 +20,26 @@ export class AppComponent {
   newPost: Post = {
     id: this.postService.allPosts.length + 1,
     title: '',
-    userId: '23',
+    userId: '0',
     body: '',
   };
 
   handleNewPost() {
     this.postService.addPost(this.newPost).subscribe({
-      next: (value) => console.log(value),
+      next: (value: any) => {
+        alert(`A new post with id: ${value?.id} has been added successfully`);
+        this.postService.allPosts.set([
+          {
+            id: value?.id,
+            title: this.newPost.title,
+            userId: this.newPost.userId,
+            body: this.newPost.body,
+          },
+          ...this.postService.allPosts(),
+        ]);
+      },
     });
+
     this.closeNewModal();
   }
 
@@ -37,6 +48,10 @@ export class AppComponent {
   }
 
   openNewModal() {
+    if (this.newPost.title) {
+      this.newPost.title = '';
+      this.newPost.body = '';
+    }
     this.showCreateModal = true;
   }
 }

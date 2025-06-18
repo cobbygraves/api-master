@@ -1,5 +1,6 @@
 <div class="posts-container">
-  @for(post of posts; track post.id){
+  @for(post of postService.allPosts(); track post.id){
+
   <app-post-card
     [post]="post"
     (editHandler)="handleEditPost($event)"
@@ -13,7 +14,7 @@
   <div class="modal-content">
     <span class="close" (click)="closeModal()">&times;</span>
     <p class="form-title">Edit Post</p>
-    <form #editForm="ngForm" (ngSubmit)="handleSavePost()">
+    <form #editForm="ngForm" (ngSubmit)="handleUpdatePost()">
       <label for="modalInput">Title</label>
       <input
         id="modalInput"
@@ -49,3 +50,13 @@
   </div>
 </div>
 <!-- ...delete modal... -->
+
+<!-- Error Modal -->
+@if (errorMessage) {
+<app-error
+  [errorMessage]="errorMessage"
+  (closeErrorEvent)="handleCloseError()"
+></app-error>
+}
+
+<!-- Error Modal -->

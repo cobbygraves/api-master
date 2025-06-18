@@ -1,0 +1,8 @@
+<div class="modal error-modal show">
+  <div class="modal-content error-modal-content">
+    <span class="close" (click)="closeErrorHandler()">&times;</span>
+    <p class="error-title">Error</p>
+    <p class="error-message">{{ errorMessage }}</p>
+    <button class="error-ok-btn" (click)="closeErrorHandler()">OK</button>
+  </div>
+</div>

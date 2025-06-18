@@ -21,11 +21,8 @@ export class ShowPostComponent implements OnInit {
 
   ngOnInit(): void {
     const postId = this.route.snapshot.paramMap.get('id')!;
-    this.postService.getSinglePost(parseInt(postId)).subscribe({
-      next: (value: Post) => {
-        this.singlePost = value;
-      },
-    });
+    console.log(postId);
+    this.singlePost = this.postService.getSinglePost(parseInt(postId))!;
 
     this.postService.getPostComments(postId).subscribe({
       next: (value) => {
