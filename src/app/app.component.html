@@ -1,1 +1,33 @@
-<p>App Component</p>
+<app-navbar (showNewFormEvent)="openNewModal()"></app-navbar>
+<div class="main">
+  <router-outlet></router-outlet>
+</div>
+
+<!-- ...new-post modal... -->
+@if(showCreateModal){
+<div class="modal" [class.show]="showCreateModal">
+  <div class="modal-content">
+    <span class="close" (click)="closeNewModal()">&times;</span>
+    <p class="form-title">New Post</p>
+    <form #newForm="ngForm" (ngSubmit)="handleNewPost()">
+      <label for="modalInput">Title</label>
+      <input
+        id="modalInput"
+        type="text"
+        [(ngModel)]="newPost.title"
+        name="title"
+      />
+      <label for="modalTextarea">Description</label>
+      <textarea
+        id="modalTextarea"
+        rows="4"
+        [(ngModel)]="newPost.body"
+        name="description"
+      ></textarea>
+
+      <button type="submit" class="submit-btn">Add Post</button>
+    </form>
+  </div>
+</div>
+}
+<!-- ...new-post modal... -->

@@ -1,0 +1,29 @@
+<div class="post-container">
+  <div class="post-header">
+    <p class="post-title">
+      <span class="title">Title: </span><span>{{ singlePost?.title }}</span>
+    </p>
+    <div class="post-body">
+      <span class="title">Body: </span><span>{{ singlePost?.body }}</span>
+    </div>
+  </div>
+
+  <p class="comment-header">Comments</p>
+  @for(comment of postComments; track comment){
+  <div class="comment-container">
+    <hr />
+    <p>
+      <span class="title">Name: </span><span>{{ comment.name }}</span>
+    </p>
+
+    <!-- <p>
+      <span class="title">Email: </span><span>{{ comment.email }}</span>
+    </p> -->
+
+    <p>
+      <span class="title">Comment: </span><span>{{ comment.body }}</span>
+    </p>
+  </div>
+
+  }
+</div>

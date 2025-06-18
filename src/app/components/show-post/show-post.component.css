@@ -1,0 +1,38 @@
+.post-container {
+  justify-self: center;
+  width: 90%;
+}
+
+.post-title {
+  display: flex;
+  gap: 10px;
+  font-size: 20px;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.post-body {
+  font-size: 20px;
+}
+
+.post-body .title {
+  font-weight: bold;
+}
+
+/* .comment-container {
+
+} */
+
+.comment-header {
+  margin-top: 50px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+@media (min-width: 768px) {
+  .post-container {
+    width: 65%;
+  }
+}

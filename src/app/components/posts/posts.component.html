@@ -1,0 +1,51 @@
+<div class="posts-container">
+  @for(post of posts; track post.id){
+  <app-post-card
+    [post]="post"
+    (editHandler)="handleEditPost($event)"
+    (deleteHandler)="handleDeletePost($event)"
+  ></app-post-card>
+  }
+</div>
+
+<!-- ...edit modal... -->
+<div class="modal" [class.show]="showEditModal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <p class="form-title">Edit Post</p>
+    <form #editForm="ngForm" (ngSubmit)="handleSavePost()">
+      <label for="modalInput">Title</label>
+      <input
+        id="modalInput"
+        type="text"
+        [(ngModel)]="singlePost.title"
+        name="title"
+      />
+
+      <label for="modalTextarea">Description</label>
+      <textarea
+        id="modalTextarea"
+        rows="4"
+        [(ngModel)]="singlePost.body"
+        name="description"
+      ></textarea>
+
+      <button type="submit" class="submit-btn">Save</button>
+    </form>
+  </div>
+</div>
+<!-- ...edit modal... -->
+
+<!-- ...delete modal... -->
+<div class="modal" [class.show]="showDeleteModal">
+  <div class="modal-content delete-modal-content">
+    <span class="close" (click)="closeDeleteModal()">&times;</span>
+    <p class="delete-title">Delete Post</p>
+    <p class="delete-message">Are you sure you want to delete this post?</p>
+    <div class="delete-actions">
+      <button class="delete-btn" (click)="confirmDelete()">Delete</button>
+      <button class="cancel-btn" (click)="closeDeleteModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+<!-- ...delete modal... -->
