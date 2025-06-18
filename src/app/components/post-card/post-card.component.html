@@ -1,0 +1,13 @@
+<div class="card">
+  <p class="card-title">{{ post()?.title }}</p>
+  <div class="card-body">
+    {{ post()?.body }}
+  </div>
+  <div class="card-footer">
+    <button class="view" (click)="viewPostHandler(post()?.id)">view</button>
+    <button class="edit" (click)="editPostHandler(post()?.id)">edit</button>
+    <button class="delete-btn" (click)="confirmDelete(post()?.id)">
+      delete
+    </button>
+  </div>
+</div>

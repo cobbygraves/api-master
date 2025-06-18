@@ -1,0 +1,49 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 90%;
+  height: 275px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  padding: 10px;
+}
+
+.card-title {
+  font-size: 23px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.card-footer {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.card-footer button {
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: #d32f2f;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.card-footer button.view {
+  background-color: black;
+  color: white;
+}
