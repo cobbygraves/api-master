@@ -1,59 +1,71 @@
-# ApiMaster
+# Angular Posts API Project
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
+## Overview
 
-## Development server
+This project is an Angular application that interacts with a posts API. It allows users to view, add, edit, and delete posts. The application demonstrates the use of Angular features such as components, services, routing, HTTP interceptors, route guards, and both template-driven and reactive forms. Authentication is simulated using a mock token stored in localStorage.
 
-To start a local development server, run:
+## Features
 
-```bash
-ng serve
-```
+- **View Posts:** Display a paginated list of posts fetched from an API.
+- **Add Post:** Authenticated users can add new posts.
+- **Edit Post:** Authenticated users can update existing posts.
+- **Delete Post:** Authenticated users can delete posts with confirmation modals.
+- **Authentication:** Simulated login and logout using a mock JWT token.
+- **Route Guards:** Protect add and edit routes so only authenticated users can access them.
+- **HTTP Interceptor:** Automatically attaches the auth token to API requests and logs requests/responses.
+- **Error Handling:** Displays error modals for failed requests.
+- **Responsive Design:** The UI is styled to be mobile-friendly.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## How It Works
 
-## Code scaffolding
+1. **Authentication:**
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+   - Users log in via a login form (reactive form).
+   - On successful login, a mock token is stored in `localStorage`.
+   - The presence of the token is used to determine authentication status.
 
-```bash
-ng generate component component-name
-```
+2. **Routing and Guards:**
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+   - The app uses Angular Router for navigation.
+   - Route guards prevent access to add/edit post routes if the user is not authenticated.
 
-```bash
-ng generate --help
-```
+3. **HTTP Interceptor:**
 
-## Building
+   - An interceptor attaches the token from `localStorage` to outgoing API requests.
+   - It also logs requests and responses for debugging.
 
-To build the project run:
+4. **Posts Management:**
 
-```bash
-ng build
-```
+   - Posts are fetched from an API and displayed in a paginated list.
+   - Users can add, edit, or delete posts through modals and forms.
+   - All changes are reflected in the UI.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+5. **Error Handling:**
+   - Errors from HTTP requests are caught and displayed in a modal dialog.
 
-## Running unit tests
+## Getting Started
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+1. **Install Dependencies:**
 
-```bash
-ng test
-```
+   npm install
 
-## Running end-to-end tests
+2. **Run the Application:**
 
-For end-to-end (e2e) testing, run:
+   ng serve
 
-```bash
-ng e2e
-```
+   The app is available at `http://localhost:4200`.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+3. **Login:**
 
-## Additional Resources
+   - Navigate to `/login` and enter a username and email to simulate login.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+4. **Using the App:**
+   - After login, you can view, add, edit, and delete posts.
+
+## Project Structure
+
+- `src/app/components/` — Angular components (posts, login, modals, etc.)
+- `src/app/services/` — Services for API and authentication logic
+- `src/app/interceptors/` — HTTP interceptors for auth and logging
+- `src/app/guards/` — Route guards for authentication
+- `src/app/models/` — TypeScript interfaces for data models
