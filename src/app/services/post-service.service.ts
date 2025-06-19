@@ -3,7 +3,8 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Post } from '../models/post';
 import { environment } from '../../environments/environment';
 import { Comment } from '../models/comment';
-import { retry } from 'rxjs';
+import { retry, tap } from 'rxjs';
+import { Cache } from '../models/cache';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +12,10 @@ import { retry } from 'rxjs';
 export class PostServiceService {
   http = inject(HttpClient);
   allPosts = signal<Post[]>([]);
+  cache = new Map<string, Cache>();
 
   constructor() {
-    this.getAllPosts().subscribe({
+    this.getAllPosts()?.subscribe({
       next: (value) => {
         if (this.allPosts().length > 0) {
           return;
@@ -25,7 +27,20 @@ export class PostServiceService {
   }
 
   getAllPosts() {
-    return this.http.get<Post[]>(`${environment.baseURL}/posts`).pipe(retry(3));
+    const cache = new Map();
+    const defaultCacheDuration = 7000 * 60;
+    const cachedData = cache.get(`${environment.baseURL}/posts`) as Cache;
+    const isValid = Date.now();
+    if (cachedData && cachedData.expiry > isValid) {
+      return this.allPosts.set(cachedData.data);
+    } else {
+      return this.http.get<Post[]>(`${environment.baseURL}/posts`).pipe(
+        retry(3),
+        tap((data) => {
+          cache.set(`${environment.baseURL}/posts`, data);
+        })
+      );
+    }
   }
 
   getSinglePost(id: number | null) {

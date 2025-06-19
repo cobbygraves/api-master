@@ -27,7 +27,7 @@ export class PostsComponent implements OnInit {
   }
 
   getPosts() {
-    this.postService.getAllPosts().subscribe({
+    this.postService.getAllPosts()?.subscribe({
       next: (value: Post[]) => {
         if (this.postService.allPosts().length > 0) {
           return;
