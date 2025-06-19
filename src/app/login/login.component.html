@@ -1,0 +1,49 @@
+<div class="login-container">
+  <h2 class="login-title">Login</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <div class="input-control">
+      <label for="username">Username</label>
+      <input
+        id="username"
+        name="username"
+        type="text"
+        formControlName="username"
+        class="login-input"
+        autocomplete="username"
+      />
+      <div
+        *ngIf="
+          loginForm.get('username')?.invalid &&
+          loginForm.get('username')?.touched
+        "
+        class="error"
+      >
+        Username is required.
+      </div>
+    </div>
+
+    <div class="input-control">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        formControlName="email"
+        class="login-input"
+        autocomplete="email"
+      />
+      <div
+        *ngIf="
+          loginForm.get('email')?.invalid && loginForm.get('email')?.touched
+        "
+        class="error"
+      >
+        Valid email is required.
+      </div>
+    </div>
+
+    <button type="submit" class="login-btn" [disabled]="!loginForm.valid">
+      Login
+    </button>
+  </form>
+</div>
