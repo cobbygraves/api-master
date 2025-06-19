@@ -1,6 +1,6 @@
 .login-container {
   max-width: 360px;
-  margin: 48px auto;
+  margin: 175px auto;
   padding: 24px 16px;
   background: #fff;
   border-radius: 8px;
@@ -52,7 +52,7 @@ label {
 }
 @media (max-width: 600px) {
   .login-container {
-    margin: 16px;
+    margin: 150px 16px;
     padding: 12px 4px;
     width: 98vw;
     min-width: 0;
