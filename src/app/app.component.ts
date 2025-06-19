@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PostServiceService } from './services/post-service.service';
 import { Post } from './models/post';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +15,14 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 export class AppComponent {
   postService = inject(PostServiceService);
   showCreateModal = false;
-
-  constructor() {}
+  isLoginPage = false;
+  constructor(private router: Router) {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.isLoginPage = event.urlAfterRedirects === '/login';
+      });
+  }
 
   newPost: Post = {
     id: this.postService.allPosts.length + 1,

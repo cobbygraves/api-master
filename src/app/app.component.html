@@ -1,4 +1,7 @@
+@if( !isLoginPage ){
 <app-navbar (showNewFormEvent)="openNewModal()"></app-navbar>
+}
+
 <div class="main">
   <router-outlet></router-outlet>
 </div>

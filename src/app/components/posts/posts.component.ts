@@ -21,6 +21,8 @@ export class PostsComponent implements OnInit {
   errorMessage = '';
 
   ngOnInit(): void {
+    const mockToken = 'mocked-jwt-token-123456';
+    localStorage.setItem('authToken', mockToken);
     this.getPosts();
   }
 

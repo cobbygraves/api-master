@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { effect, inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Post } from '../models/post';
 import { environment } from '../../environments/environment';
 import { Comment } from '../models/comment';
