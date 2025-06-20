@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
   constructor(private router: Router) {}
-  showNewFormEvent = output();
+  @Output() showNewFormEvent = new EventEmitter<void>();
 
   handleNewPost() {
     this.showNewFormEvent.emit();
