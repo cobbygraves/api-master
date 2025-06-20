@@ -15,7 +15,7 @@ export class PostServiceService {
   cache = new Map<string, Cache>();
 
   constructor() {
-    this.getAllPosts()?.subscribe({
+    this.getAllPosts(1)?.subscribe({
       next: (value) => {
         if (this.allPosts().length > 0) {
           return;
@@ -26,7 +26,7 @@ export class PostServiceService {
     });
   }
 
-  getAllPosts() {
+  getAllPosts(pageNo: number) {
     const cache = new Map();
     const defaultCacheDuration = 7000 * 60;
     const cachedData = this.cache.get(`${environment.baseURL}/posts`) as Cache;
@@ -34,15 +34,19 @@ export class PostServiceService {
     if (cachedData && cachedData.expiry > isValid) {
       return this.allPosts.set(cachedData.data);
     } else {
-      return this.http.get<Post[]>(`${environment.baseURL}/posts`).pipe(
-        retry(3),
-        tap((data) => {
-          cache.set(`${environment.baseURL}/posts`, {
-            expiry: defaultCacheDuration,
-            data: data,
-          });
-        })
-      );
+      return this.http
+        .get<Post[]>(
+          `${environment.baseURL}/posts?_start=${[pageNo]}&_limit=${10}`
+        )
+        .pipe(
+          retry(3),
+          tap((data) => {
+            cache.set(`${environment.baseURL}/posts`, {
+              expiry: defaultCacheDuration,
+              data: data,
+            });
+          })
+        );
     }
   }
 
