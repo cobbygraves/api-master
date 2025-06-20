@@ -1,17 +1,26 @@
 import { TestBed } from '@angular/core/testing';
-import { CanActivateFn } from '@angular/router';
+import { Router } from '@angular/router';
+import { AuthGuard } from './auth.guard';
 
-import { authGuard } from './auth.guard';
-
-describe('authGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => authGuard(...guardParameters));
+describe('AuthGuard', () => {
+  let guard: AuthGuard;
+  let routerSpy: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    TestBed.configureTestingModule({
+      providers: [AuthGuard, { provide: Router, useValue: routerSpy }],
+    });
+    guard = TestBed.inject(AuthGuard);
+    localStorage.clear();
   });
 
-  it('should be created', () => {
-    expect(executeGuard).toBeTruthy();
+  it('should allow activation if token exists', () => {
+    localStorage.setItem('authToken', 'mock-token');
+    expect(guard.canActivate()).toBeTrue();
+  });
+
+  it('should block activation and redirect if token does not exist', () => {
+    expect(guard.canActivate()).toBeFalse();
   });
 });

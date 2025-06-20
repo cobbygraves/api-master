@@ -29,7 +29,7 @@ export class PostServiceService {
   getAllPosts() {
     const cache = new Map();
     const defaultCacheDuration = 7000 * 60;
-    const cachedData = cache.get(`${environment.baseURL}/posts`) as Cache;
+    const cachedData = this.cache.get(`${environment.baseURL}/posts`) as Cache;
     const isValid = Date.now();
     if (cachedData && cachedData.expiry > isValid) {
       return this.allPosts.set(cachedData.data);
@@ -37,7 +37,10 @@ export class PostServiceService {
       return this.http.get<Post[]>(`${environment.baseURL}/posts`).pipe(
         retry(3),
         tap((data) => {
-          cache.set(`${environment.baseURL}/posts`, data);
+          cache.set(`${environment.baseURL}/posts`, {
+            expiry: defaultCacheDuration,
+            data: data,
+          });
         })
       );
     }
