@@ -8,6 +8,12 @@
   ></app-post-card>
   }
 </div>
+<app-pagination
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChange)="handlePageChange($event)"
+>
+</app-pagination>
 
 <!-- ...edit modal... -->
 <div class="modal" [class.show]="showEditModal">

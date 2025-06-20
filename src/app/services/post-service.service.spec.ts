@@ -36,7 +36,7 @@ describe('PostServiceService', () => {
       { id: 2, title: 'Post 2' },
     ] as any;
 
-    service.getAllPosts()?.subscribe((posts) => {
+    service.getAllPosts(1)?.subscribe((posts) => {
       expect(posts).toEqual(dummyPosts);
     });
 

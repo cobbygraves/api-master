@@ -4,10 +4,16 @@ import { Post } from '../../models/post';
 import { PostServiceService } from '../../services/post-service.service';
 import { FormsModule } from '@angular/forms';
 import { ErrorComponent } from '../error/error.component';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 @Component({
   selector: 'app-posts',
-  imports: [PostCardComponent, FormsModule, ErrorComponent],
+  imports: [
+    PostCardComponent,
+    FormsModule,
+    ErrorComponent,
+    PaginationComponent,
+  ],
   templateUrl: './posts.component.html',
   styleUrl: './posts.component.css',
 })
@@ -19,6 +25,8 @@ export class PostsComponent implements OnInit {
   postService = inject(PostServiceService);
   showDeleteModal = false;
   errorMessage = '';
+  currentPage = 1;
+  totalPages = 100 / 10;
 
   ngOnInit(): void {
     const mockToken = 'mocked-jwt-token-123456';
@@ -26,14 +34,15 @@ export class PostsComponent implements OnInit {
     this.getPosts();
   }
 
+  handlePageChange(page: number) {
+    this.currentPage = page;
+    this.getPosts();
+  }
+
   getPosts() {
-    this.postService.getAllPosts()?.subscribe({
+    this.postService.getAllPosts(this.currentPage + 10)?.subscribe({
       next: (value: Post[]) => {
-        if (this.postService.allPosts().length > 0) {
-          return;
-        } else {
-          this.postService.allPosts.set(value);
-        }
+        this.postService.allPosts.set(value);
       },
       error: (error: string) => (this.errorMessage = error),
     });
