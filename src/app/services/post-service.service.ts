@@ -13,7 +13,7 @@ export class PostServiceService {
   http = inject(HttpClient);
   allPosts = signal<Post[]>([]);
   cache = new Map<string, Cache>();
-
+  defaultCacheDuration = 7000 * 60;
   constructor() {
     this.getAllPosts(1)?.subscribe({
       next: (value) => {
@@ -27,13 +27,13 @@ export class PostServiceService {
   }
 
   getAllPosts(pageNo: number) {
-    const cache = new Map();
-    const defaultCacheDuration = 7000 * 60;
     const cachedData = this.cache.get(`${environment.baseURL}/posts`) as Cache;
     const isValid = Date.now();
-    if (cachedData && cachedData.expiry > isValid) {
+
+    if (cachedData && cachedData.expiry < isValid) {
       return this.allPosts.set(cachedData.data);
     } else {
+      console.log('calling post from API...');
       return this.http
         .get<Post[]>(
           `${environment.baseURL}/posts?_start=${[pageNo]}&_limit=${10}`
@@ -41,8 +41,8 @@ export class PostServiceService {
         .pipe(
           retry(3),
           tap((data) => {
-            cache.set(`${environment.baseURL}/posts`, {
-              expiry: defaultCacheDuration,
+            this.cache.set(`${environment.baseURL}/posts`, {
+              expiry: this.defaultCacheDuration + Date.now(),
               data: data,
             });
           })
